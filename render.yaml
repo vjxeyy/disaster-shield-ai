@@ -1,0 +1,21 @@
+# Render Blueprint for Disaster-Shield AI (https://render.com/docs/blueprint-spec)
+# Deploys the Next.js app as a single Node web service. With no Supabase variables set,
+# the app runs in demo mode (simulated Chennai data stored in each visitor's browser).
+services:
+  - type: web
+    name: disaster-shield-ai
+    runtime: node
+    plan: free
+    region: singapore
+    branch: main
+    autoDeploy: true
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      # Optional — add these in the Render dashboard to switch to Supabase mode:
+      # NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY

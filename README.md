@@ -139,7 +139,21 @@ Copy `.env.example` to `.env.local` for local development.
 
 Or from the CLI: `npm i -g vercel` → `vercel` → `vercel --prod`.
 
-## 9. How the risk engine works
+## 9. Deploy to Render
+
+The repository includes a `render.yaml` blueprint (free plan, Singapore region, Node 22).
+
+1. On [render.com](https://render.com) → **New → Blueprint** → connect this repository → **Apply**. Or create a **Web Service** manually with:
+   - Runtime: **Node** · Branch: `main`
+   - Build command: `npm ci --include=dev && npm run build`
+   - Start command: `npm start` (Next.js reads Render's `PORT` automatically)
+   - Environment: `NODE_VERSION=22`
+2. Optional: add the Supabase variables from section 6. `NEXT_PUBLIC_*` values are baked in at build time, so redeploy after changing them.
+3. Pushing to `main` redeploys automatically. Check `https://<service>.onrender.com/api/health`.
+
+Free Render instances sleep after about 15 minutes without traffic; the first visit after that can take up to a minute while the service wakes. Open the site a few minutes before a live demo.
+
+## 10. How the risk engine works
 
 `score = rainfall (max 35) + intensity (10) + waterlogging reports (20) + active SOS (15) + historical susceptibility (20)`
 
@@ -152,7 +166,7 @@ Or from the CLI: `npm i -g vercel` → `vercel` → `vercel --prod`.
 
 Every factor's input, points and plain-language reason is shown in the UI. To add a trained model, implement the `RiskModel` interface in `src/lib/risk/engine.ts` (or wrap a remote inference API) and register it in `src/lib/risk/index.ts`; the UI and `/api/risk/assess` use whichever model is active.
 
-## 10. Limitations and incomplete items
+## 11. Limitations and incomplete items
 
 - **Simulated data only.** No IMD/rain-gauge, GIS drainage or government feeds are integrated; the scenario simulator stands in for live rainfall.
 - **Not a validated model.** Weights and thresholds are illustrative and need calibration with historical flood records.
