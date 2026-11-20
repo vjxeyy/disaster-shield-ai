@@ -20,7 +20,7 @@ import { useToast } from "@/components/ui/Toast";
 import { Field, Input } from "@/components/ui/form";
 import { Button, Skeleton } from "@/components/ui/primitives";
 import { ROLE_HOME } from "@/lib/auth/permissions";
-import { ROLE_LABELS } from "@/lib/constants";
+import { APP_NAME, ROLE_LABELS } from "@/lib/constants";
 import { useAppData } from "@/lib/data/AppDataProvider";
 import { DEMO_LOGIN_USERS } from "@/lib/data/seed";
 import { cn } from "@/lib/format";
@@ -89,7 +89,7 @@ export function LandingView() {
               Predict. Warn. Rescue. <span className="text-teal-300">Recover.</span>
             </h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-navy-200">
-              Disaster-Shield AI connects government control rooms, residents, rescue teams and relief centres on one
+              {APP_NAME} connects government control rooms, residents, rescue teams and relief centres on one
               platform — from an explainable flood-risk heatmap to SOS triage and shelter capacity, all driven by the
               same shared data.
             </p>
@@ -141,7 +141,7 @@ export function LandingView() {
                   disabled={!!pending}
                   onClick={() => void enterAs("official", "/demo", "guided")}
                 >
-                  <CirclePlay className="size-5" /> Start guided demo (Velachery flood scenario)
+                  <CirclePlay className="size-5" /> Start guided demo<span className="hidden sm:inline">(Velachery flood scenario)</span>
                 </Button>
 
                 <div className="mt-4 grid gap-2.5">

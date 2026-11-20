@@ -1,9 +1,9 @@
-# Render Blueprint for Disaster-Shield AI (https://render.com/docs/blueprint-spec)
+# Render Blueprint for RESCURA (https://render.com/docs/blueprint-spec)
 # Deploys the Next.js app as a single Node web service. With no Supabase variables set,
 # the app runs in demo mode (simulated Chennai data stored in each visitor's browser).
 services:
   - type: web
-    name: disaster-shield-ai
+    name: rescura
     runtime: node
     plan: free
     region: singapore

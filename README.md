@@ -1,4 +1,4 @@
-# Disaster-Shield AI
+# RESCURA
 
 **Smart India Hackathon 2026 · Team Debug Decoders**
 
@@ -47,7 +47,7 @@ No separate Python backend, no React Native, no Firebase.
 ## 4. Project structure
 
 ```
-disaster-shield-ai/
+rescura/
 ├─ src/
 │  ├─ app/
 │  │  ├─ page.tsx                 # Landing + demo role selection / Supabase sign-in

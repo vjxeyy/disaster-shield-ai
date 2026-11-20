@@ -438,7 +438,7 @@ function SystemPanel() {
     const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = `disaster-shield-data-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")}.json`;
+    a.download = `rescura-data-${new Date().toISOString().slice(0, 16).replace(/[:T]/g, "-")}.json`;
     a.click();
     URL.revokeObjectURL(a.href);
   }

@@ -3,7 +3,7 @@
 import { Bell, Database, FlaskConical, LogOut, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ROLE_LABELS } from "@/lib/constants";
+import { APP_NAME, ROLE_LABELS } from "@/lib/constants";
 import { useAppData } from "@/lib/data/AppDataProvider";
 import { formatTime } from "@/lib/format";
 import { navItemFor } from "./nav";
@@ -27,7 +27,7 @@ export function Topbar({ onMenu }: { onMenu: () => void }) {
           <Menu className="size-5" />
         </button>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-navy-950">{item?.label ?? "Disaster-Shield AI"}</p>
+          <p className="truncate text-sm font-semibold text-navy-950">{item?.label ?? APP_NAME}</p>
           <p className="hidden truncate text-[11px] text-slate-500 sm:block">{item?.description}</p>
         </div>
 

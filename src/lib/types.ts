@@ -1,5 +1,5 @@
 /**
- * Core domain types for Disaster-Shield AI.
+ * Core domain types for RESCURA.
  * These mirror the Supabase schema in /supabase/migrations (snake_case there, camelCase here).
  */
 

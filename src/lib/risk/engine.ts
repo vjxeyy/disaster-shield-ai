@@ -1,5 +1,5 @@
 /**
- * Disaster-Shield AI — Flood Risk Engine
+ * RESCURA — Flood Risk Engine
  *
  * PROTOTYPE. This is a transparent, rule-based scoring model that runs on SIMULATED inputs.
  * It is NOT a trained machine-learning model and has NOT been scientifically validated.

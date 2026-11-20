@@ -137,18 +137,18 @@ export function createSeedState(now: Date = new Date()): AppState {
 
   /* ---------------- Users ---------------- */
   const users: UserProfile[] = [
-    { id: "u-admin", name: "Kavya Natarajan", email: "admin@demo.disastershield.in", phone: "+91 90000 10001", role: "admin", title: "System Administrator", active: true, createdAt: ago(60 * 24 * 30) },
-    { id: "u-off-1", name: "Anitha Suresh", email: "anitha.s@demo.disastershield.in", phone: "+91 90000 10002", role: "official", title: "District Emergency Operations Officer", active: true, createdAt: ago(60 * 24 * 28) },
-    { id: "u-off-2", name: "Rahul Venkatesh", email: "rahul.v@demo.disastershield.in", phone: "+91 90000 10003", role: "official", title: "Zonal Control Room Officer", active: true, createdAt: ago(60 * 24 * 20) },
-    { id: "u-res-1", name: "Priya Raman", email: "priya.r@demo.disastershield.in", phone: "+91 90000 20001", role: "resident", zoneId: "velachery", active: true, createdAt: ago(60 * 24 * 12) },
-    { id: "u-res-2", name: "Meena Krishnan", email: "meena.k@demo.disastershield.in", phone: "+91 90000 20002", role: "resident", zoneId: "velachery", active: true, createdAt: ago(60 * 24 * 9) },
-    { id: "u-res-3", name: "Abdul Rahman", email: "abdul.r@demo.disastershield.in", phone: "+91 90000 20003", role: "resident", zoneId: "tambaram", active: true, createdAt: ago(60 * 24 * 7) },
-    { id: "u-resq-1", name: "Arjun Menon", email: "arjun.m@demo.disastershield.in", phone: "+91 90000 30001", role: "rescue", title: "Team Lead", teamId: "team-1", active: true, createdAt: ago(60 * 24 * 25) },
-    { id: "u-resq-2", name: "Deepa Raj", email: "deepa.r@demo.disastershield.in", phone: "+91 90000 30002", role: "rescue", title: "Team Lead", teamId: "team-2", active: true, createdAt: ago(60 * 24 * 25) },
-    { id: "u-resq-3", name: "Senthil Kumar", email: "senthil.k@demo.disastershield.in", phone: "+91 90000 30003", role: "rescue", title: "Station Officer", teamId: "team-3", active: true, createdAt: ago(60 * 24 * 25) },
-    { id: "u-resq-4", name: "Imran Basha", email: "imran.b@demo.disastershield.in", phone: "+91 90000 30004", role: "rescue", title: "Unit Supervisor", teamId: "team-4", active: true, createdAt: ago(60 * 24 * 25) },
-    { id: "u-resq-5", name: "Dr. Fathima Begum", email: "fathima.b@demo.disastershield.in", phone: "+91 90000 30005", role: "rescue", title: "Medical Officer", teamId: "team-5", active: true, createdAt: ago(60 * 24 * 25) },
-    { id: "u-resq-6", name: "Vikram Singh", email: "vikram.s@demo.disastershield.in", phone: "+91 90000 30006", role: "rescue", title: "Team Commander", teamId: "team-6", active: true, createdAt: ago(60 * 24 * 25) },
+    { id: "u-admin", name: "Kavya Natarajan", email: "admin@rescura.example", phone: "+91 90000 10001", role: "admin", title: "System Administrator", active: true, createdAt: ago(60 * 24 * 30) },
+    { id: "u-off-1", name: "Anitha Suresh", email: "anitha.s@rescura.example", phone: "+91 90000 10002", role: "official", title: "District Emergency Operations Officer", active: true, createdAt: ago(60 * 24 * 28) },
+    { id: "u-off-2", name: "Rahul Venkatesh", email: "rahul.v@rescura.example", phone: "+91 90000 10003", role: "official", title: "Zonal Control Room Officer", active: true, createdAt: ago(60 * 24 * 20) },
+    { id: "u-res-1", name: "Priya Raman", email: "priya.r@rescura.example", phone: "+91 90000 20001", role: "resident", zoneId: "velachery", active: true, createdAt: ago(60 * 24 * 12) },
+    { id: "u-res-2", name: "Meena Krishnan", email: "meena.k@rescura.example", phone: "+91 90000 20002", role: "resident", zoneId: "velachery", active: true, createdAt: ago(60 * 24 * 9) },
+    { id: "u-res-3", name: "Abdul Rahman", email: "abdul.r@rescura.example", phone: "+91 90000 20003", role: "resident", zoneId: "tambaram", active: true, createdAt: ago(60 * 24 * 7) },
+    { id: "u-resq-1", name: "Arjun Menon", email: "arjun.m@rescura.example", phone: "+91 90000 30001", role: "rescue", title: "Team Lead", teamId: "team-1", active: true, createdAt: ago(60 * 24 * 25) },
+    { id: "u-resq-2", name: "Deepa Raj", email: "deepa.r@rescura.example", phone: "+91 90000 30002", role: "rescue", title: "Team Lead", teamId: "team-2", active: true, createdAt: ago(60 * 24 * 25) },
+    { id: "u-resq-3", name: "Senthil Kumar", email: "senthil.k@rescura.example", phone: "+91 90000 30003", role: "rescue", title: "Station Officer", teamId: "team-3", active: true, createdAt: ago(60 * 24 * 25) },
+    { id: "u-resq-4", name: "Imran Basha", email: "imran.b@rescura.example", phone: "+91 90000 30004", role: "rescue", title: "Unit Supervisor", teamId: "team-4", active: true, createdAt: ago(60 * 24 * 25) },
+    { id: "u-resq-5", name: "Dr. Fathima Begum", email: "fathima.b@rescura.example", phone: "+91 90000 30005", role: "rescue", title: "Medical Officer", teamId: "team-5", active: true, createdAt: ago(60 * 24 * 25) },
+    { id: "u-resq-6", name: "Vikram Singh", email: "vikram.s@rescura.example", phone: "+91 90000 30006", role: "rescue", title: "Team Commander", teamId: "team-6", active: true, createdAt: ago(60 * 24 * 25) },
   ];
 
   /* ---------------- Rescue teams ---------------- */

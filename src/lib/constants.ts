@@ -13,7 +13,7 @@ import type {
   Urgency,
 } from "./types";
 
-export const APP_NAME = "Disaster-Shield AI";
+export const APP_NAME = "RESCURA";
 
 /** Map centre for the Chennai demonstration region. */
 export const CHENNAI_CENTER: [number, number] = [12.982, 80.2];

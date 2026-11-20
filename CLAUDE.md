@@ -1,4 +1,4 @@
-# CLAUDE.md: Disaster-Shield AI project instructions
+# CLAUDE.md: RESCURA project instructions
 
 These are the permanent instructions for this project. Every development session follows them.
 Read this whole file and the whole of [`PLAN.md`](PLAN.md) before starting any task.
@@ -38,7 +38,7 @@ This applies to every feature, modification, debugging session, test run, integr
 
 ## 1. Project overview
 
-**Disaster-Shield AI** is a web platform prototype for **urban flood preparedness and response**. The pilot region is **Chennai, Tamil Nadu**, covering eight localities: Velachery, Tambaram, Adyar, Saidapet, Perungudi, Pallikaranai, Madipakkam and T. Nagar.
+**RESCURA** (renamed from *Disaster-Shield AI* on 2026-11-20) is a web platform prototype for **urban flood preparedness and response**. The pilot region is **Chennai, Tamil Nadu**, covering eight localities: Velachery, Tambaram, Adyar, Saidapet, Perungudi, Pallikaranai, Madipakkam and T. Nagar.
 
 **Objectives**
 
@@ -59,8 +59,8 @@ This applies to every feature, modification, debugging session, test run, integr
 6. The resident tracks progress.
 7. The official updates occupancy at Velachery Corporation HSS.
 
-Live site: <https://disaster-shield-ai-r7x6.onrender.com> (demo mode).
-Repository: <https://github.com/vjxeyy/disaster-shield-ai> (public, branch `main`).
+Live site: <https://disaster-shield-ai-r7x6.onrender.com> (demo mode). The URL keeps the old name because Render fixes it when a service is created.
+Repository: <https://github.com/vjxeyy/rescura> (public, branch `main`). The old `vjxeyy/disaster-shield-ai` URL redirects here.
 
 ---
 
@@ -76,14 +76,17 @@ Repository: <https://github.com/vjxeyy/disaster-shield-ai> (public, branch `main
    - In Supabase mode, Row Level Security and `SECURITY DEFINER` RPCs are the real enforcement.
    - UI hiding (nav roles, `RoleGuard`) is only for user experience.
 4. **Do not rename the project without explicit approval.**
-   - The name is **Disaster-Shield AI**. It is `APP_NAME` in `src/lib/constants.ts`, and the package and repo are `disaster-shield-ai`.
-   - The owner chose to keep this name on 2026-11-19 after a name-conflict check.
+   - The name is **RESCURA**. It is `APP_NAME` in `src/lib/constants.ts`; every UI label, the page titles and `/api/health` read from it.
+   - The package, GitHub repo and Render service are `rescura`.
+   - The owner approved the rename from *Disaster-Shield AI* on 2026-11-20 and chose to **keep the current Render URL**.
+   - The local folder is still named `disaster-shield-ai`, and the internal `dsa` prefixes (storage keys, CSS classes) were kept on purpose. Renaming the storage keys would reset every visitor's demo data.
 5. **No team name or hackathon name in the UI.** The owner removed them on request, together with the old "Chennai flood response · Prototype" subtitle.
    - `TEAM_NAME` and `EVENT_NAME` no longer exist; do not re-add them.
    - `README.md` still mentions them in its title block. Change it only if asked.
 6. **Stack limits:** no React Native, no FastAPI or other Python backend, no Firebase.
 7. **Git and deployment:**
-   - Commit or push only when the owner asks. Pushing to `main` **automatically redeploys Render**. Put `[skip render]` in the commit message for doc-only commits that should not redeploy.
+   - Commit or push only when the owner asks.
+   - Pushing to `main` does **not** redeploy Render. The service uses a plain public Git repo URL, and Render offers auto-deploy only for Blueprint or Git-provider repos (see §13). Every deploy is **manual**, and deploying needs the owner's approval.
    - Never commit secrets. `.env*` is git-ignored except `.env.example`. `SUPABASE_SERVICE_ROLE_KEY` is server-only and must never get a `NEXT_PUBLIC_` prefix.
 8. **Outward-facing actions need approval first:** deploying, buying or attaching a domain, changing Render or GitHub settings.
 
@@ -230,6 +233,8 @@ Seed totals: 12 users (3 residents, 2 officials, 6 rescue users mapped to team-1
 | Official | `u-off-1` | Anitha Suresh | |
 | Rescue | `u-resq-1` | Arjun Menon | team-1 (SDRF Boat Team Alpha) |
 | Admin | `u-admin` | Kavya Natarajan | |
+
+Demo emails use the reserved test domain `@rescura.example`, which can never be registered by anyone. Keep fake data on reserved domains such as `.example`.
 
 **When a permission changes,** update all of these together:
 
@@ -469,7 +474,7 @@ A task is done only when all of these hold:
 
 ```bash
 npm install            # install dependencies
-npm run dev            # dev server → http://localhost:3000 (.claude/launch.json: "disaster-shield-dev")
+npm run dev            # dev server → http://localhost:3000 (.claude/launch.json: "rescura-dev")
 npm run build          # production build
 npm start              # serve the build (reads PORT)
 npm run lint           # ESLint (incl. React-compiler rules)
@@ -491,23 +496,29 @@ The Blueprint is `render.yaml`. However, the **live service was created directly
 
 | Setting | Value |
 | --- | --- |
-| Service | `disaster-shield-ai`, type web, runtime node, plan **free**, region **singapore** |
-| Branch | `main`, auto-deploy on every commit (`autoDeploy: yes`, trigger `commit`) |
+| Service | `rescura` (renamed from `disaster-shield-ai` on 2026-11-20), type web, runtime node, plan **free**, region **singapore** |
+| Source | **Public Git repository** `https://github.com/vjxeyy/disaster-shield-ai` (redirects to `vjxeyy/rescura`). No Git provider is connected to the Render account. Switching the source to the new URL needs a deploy, so it is planned together with the rename deploy. |
+| Branch | `main` |
+| Auto-deploy | **Not available.** The API reports `autoDeploy: yes`, but Render's Update Source dialog states that auto-deploy works only for repos configured with Blueprints (or a connected Git provider). Pushes do nothing; deploy manually from the dashboard (**Manual Deploy**) or through the Render API. |
 | Build | `npm ci --include=dev && npm run build` (dev deps are needed for the Tailwind/TypeScript build) |
 | Start | `npm start` (Next reads Render's `PORT`) |
 | Health check | `/api/health` on the live service (set in the dashboard on 2026-11-20; matches `render.yaml`) |
 | Environment | `NODE_VERSION=22`, `NEXT_TELEMETRY_DISABLED=1` (Supabase variables optional) |
-| Live URL | <https://disaster-shield-ai-r7x6.onrender.com>. Render added the `-r7x6` suffix even though the plain subdomain looked free. |
+| Live URL | <https://disaster-shield-ai-r7x6.onrender.com>. Render added the `-r7x6` suffix even though the plain subdomain looked free. The URL is fixed at creation and **did not change** when the service was renamed. The owner chose to keep it; only a new service or a custom domain could change it. |
 | Render IDs | workspace `tea-dbarasrbc2fs73cgand0`, service `srv-dbvg7c6k1f9s73cfr8eg` |
 
 - **Free-plan behaviour:** the instance sleeps after about 15 minutes idle, and the first request after that can take about a minute. Open the site a few minutes before a demo.
-- **Skipping a deploy:** a commit whose message contains `[skip render]` does not redeploy. Verified on 2026-11-20 with `7ec6fcc`: it was pushed to `main` with auto-deploy on, and no deploy was created.
-- **Settings changes redeploy:** saving a service setting in the dashboard (for example the health check path) triggers a `service_updated` deploy of the **last deployed commit**. It is quick (about 20 s, no rebuild) but still a deploy, so mention it to the owner before changing settings.
+- **Correction (2026-11-20):** an earlier note said `[skip render]` was verified to skip a deploy. That conclusion was wrong. The push created no deploy because auto-deploy never runs for this service, not because of the tag. The tag is harmless but unnecessary.
+- **Which settings redeploy:**
+  - Saving the health check path triggered a `service_updated` deploy of the **last deployed commit** (about 20 s, no rebuild).
+  - Renaming the service did **not** trigger a deploy.
+  - Changing the Source asks for a deploy as its final step.
+  - Mention any expected deploy to the owner before changing settings.
 - **Deploy flow:**
   1. Run the definition-of-done checks locally.
   2. Commit (with owner approval).
-  3. Push to `main`, which triggers an automatic deploy.
-  4. Check the deploy status and logs.
+  3. Push to `main` (this alone does not deploy).
+  4. With owner approval, start a **manual deploy** of the latest commit (dashboard or Render API), then check the deploy status and logs.
   5. Open `/api/health` on the live site.
   6. Run a smoke test of the five modules in the browser.
   7. Clear any test data you created in the browser's localStorage.
@@ -518,11 +529,11 @@ The Blueprint is `render.yaml`. However, the **live service was created directly
 
 | What | Where |
 | --- | --- |
-| Main project (source of truth) | `C:\MY SPACE\Claude Projects\disaster-shield-ai` |
-| GitHub | `vjxeyy/disaster-shield-ai` (public), branch `main` |
+| Main project (source of truth) | `C:\MY SPACE\Claude Projects\disaster-shield-ai` (folder name not changed in the rename) |
+| GitHub | `vjxeyy/rescura` (public), branch `main`; local `origin` points to `https://github.com/vjxeyy/rescura.git` |
 | Front-end-only copy | `C:\Users\vijay\Documents\disaster-shield-ai-frontend` |
 
-The front-end-only copy has no `src/app/api`, `supabase` or `scripts` folders. It was made on request and is **not** synced automatically: it has the branding fix, but not `render.yaml`, the README Render section or these docs.
+The front-end-only copy has no `src/app/api`, `supabase` or `scripts` folders. It was made on request and is **not** synced automatically. It has the branding fix, but not `render.yaml`, the README Render section, these docs or the RESCURA rename.
 
 ---
 
@@ -541,3 +552,4 @@ Add new entries at the bottom. Do not delete old ones; mark them superseded inst
 | 2026-11-19 | Keep the name **Disaster-Shield AI** despite similar GitHub repos and taken .com/.ai/.org domains | Owner's decision after reviewing five alternatives |
 | 2026-11-20 | Added `CLAUDE.md` + `PLAN.md` with a mandatory read-before / update-after workflow | Owner's request |
 | 2026-11-20 | Set the health check path `/api/health` on the live Render service in the dashboard | Owner approved. The service was created through the API, so the `render.yaml` setting never applied, and Render could not detect unhealthy deploys. |
+| 2026-11-20 | **Renamed the project to RESCURA** (code, package, docs, GitHub repo `vjxeyy/rescura`, Render service `rescura`) and **kept the current Render URL**. This supersedes the 2026-11-19 "keep Disaster-Shield AI" decision. | Owner's request and approval after an availability check. Reasons for the URL: `rescura.onrender.com` cannot be guaranteed, and renaming a service never changes its URL. Seed emails moved to `@rescura.example`; `dsa` prefixes kept. |

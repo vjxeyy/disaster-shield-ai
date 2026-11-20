@@ -3,6 +3,7 @@
 import { ShieldCheck, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { APP_NAME } from "@/lib/constants";
 import { cn } from "@/lib/format";
 import type { Role } from "@/lib/types";
 import { NAV, navItemFor } from "./nav";
@@ -15,7 +16,7 @@ export function BrandMark({ compact = false }: { compact?: boolean }) {
       </div>
       {!compact && (
         <div className="leading-tight">
-          <p className="text-[15px] font-bold tracking-tight text-white">Disaster-Shield AI</p>
+          <p className="text-[15px] font-bold tracking-tight text-white">{APP_NAME}</p>
         </div>
       )}
     </div>

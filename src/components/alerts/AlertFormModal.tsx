@@ -7,7 +7,7 @@ import { Field, Input, Textarea } from "@/components/ui/form";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/primitives";
 import { useToast } from "@/components/ui/Toast";
-import { ALERT_LEVEL_LABELS, DEFAULT_SAFETY_INSTRUCTIONS } from "@/lib/constants";
+import { ALERT_LEVEL_LABELS, APP_NAME, DEFAULT_SAFETY_INSTRUCTIONS } from "@/lib/constants";
 import { useReadyData } from "@/lib/data/AppDataProvider";
 import { cn } from "@/lib/format";
 import type { AlertInput, AlertLevel } from "@/lib/types";
@@ -17,7 +17,7 @@ export function buildRiskAlertDraft(zoneNames: string[], zoneIds: string[]): Ale
   const where = zoneNames.join(", ");
   return {
     title: `Flood warning: ${where}`,
-    message: `The Disaster-Shield risk engine rates ${where} as HIGH flood risk based on very heavy rainfall and ground reports (simulated scenario). Residents of low-lying streets should prepare to move to relief shelters.`,
+    message: `The ${APP_NAME} risk engine rates ${where} as HIGH flood risk based on very heavy rainfall and ground reports (simulated scenario). Residents of low-lying streets should prepare to move to relief shelters.`,
     level: "red",
     zoneIds,
     instructions: [

@@ -1,5 +1,5 @@
 -- =====================================================================
--- Disaster-Shield AI — initial schema, Row Level Security and RPCs
+-- RESCURA — initial schema, Row Level Security and RPCs
 -- Smart India Hackathon 2026 · Team Debug Decoders
 --
 -- Run in the Supabase SQL editor (or `supabase db push`), then run
