@@ -487,20 +487,22 @@ npm run db:seed-sql    # regenerate supabase/seed.sql from src/lib/data/seed.ts
 
 ## 13. Render deployment
 
-Configuration is in `render.yaml`:
+The Blueprint is `render.yaml`. However, the **live service was created directly through the Render API, not from the Blueprint**, so editing `render.yaml` does **not** change the live service. Change live settings in the Render dashboard, and only with the owner's approval.
 
 | Setting | Value |
 | --- | --- |
 | Service | `disaster-shield-ai`, type web, runtime node, plan **free**, region **singapore** |
-| Branch | `main`, `autoDeploy: true` |
+| Branch | `main`, auto-deploy on every commit (`autoDeploy: yes`, trigger `commit`) |
 | Build | `npm ci --include=dev && npm run build` (dev deps are needed for the Tailwind/TypeScript build) |
 | Start | `npm start` (Next reads Render's `PORT`) |
-| Health check | `/api/health` |
+| Health check | `/api/health` on the live service (set in the dashboard on 2026-11-20; matches `render.yaml`) |
 | Environment | `NODE_VERSION=22`, `NEXT_TELEMETRY_DISABLED=1` (Supabase variables optional) |
 | Live URL | <https://disaster-shield-ai-r7x6.onrender.com>. Render added the `-r7x6` suffix even though the plain subdomain looked free. |
 | Render IDs | workspace `tea-dbarasrbc2fs73cgand0`, service `srv-dbvg7c6k1f9s73cfr8eg` |
 
 - **Free-plan behaviour:** the instance sleeps after about 15 minutes idle, and the first request after that can take about a minute. Open the site a few minutes before a demo.
+- **Skipping a deploy:** a commit whose message contains `[skip render]` does not redeploy. Verified on 2026-11-20 with `7ec6fcc`: it was pushed to `main` with auto-deploy on, and no deploy was created.
+- **Settings changes redeploy:** saving a service setting in the dashboard (for example the health check path) triggers a `service_updated` deploy of the **last deployed commit**. It is quick (about 20 s, no rebuild) but still a deploy, so mention it to the owner before changing settings.
 - **Deploy flow:**
   1. Run the definition-of-done checks locally.
   2. Commit (with owner approval).
@@ -538,3 +540,4 @@ Add new entries at the bottom. Do not delete old ones; mark them superseded inst
 | 2026-11-19 | Vercel deploy declined ("Not now"); deployed on **Render** instead | Owner's request |
 | 2026-11-19 | Keep the name **Disaster-Shield AI** despite similar GitHub repos and taken .com/.ai/.org domains | Owner's decision after reviewing five alternatives |
 | 2026-11-20 | Added `CLAUDE.md` + `PLAN.md` with a mandatory read-before / update-after workflow | Owner's request |
+| 2026-11-20 | Set the health check path `/api/health` on the live Render service in the dashboard | Owner approved. The service was created through the API, so the `render.yaml` setting never applied, and Render could not detect unhealthy deploys. |

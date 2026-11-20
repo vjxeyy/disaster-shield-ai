@@ -18,7 +18,7 @@
 | Overall | **Working prototype in demo mode, deployed and tested live.** All five modules work end-to-end in the Velachery scenario. |
 | Code checks | typecheck ✅ · lint ✅ · `npm run verify` 19/19 ✅ (2026-11-20) · production build ✅ (local 2026-11-19, and on Render) |
 | Live site | <https://disaster-shield-ai-r7x6.onrender.com>. `/api/health` returned `ok`, `dataMode: demo`, `rule-based@1.0.0-prototype` on 2026-11-20. |
-| Repository | `vjxeyy/disaster-shield-ai` (public). On GitHub, `main` is at `f635c2e`. `CLAUDE.md` and `PLAN.md` are committed locally on `main` but **not pushed yet**. |
+| Repository | `vjxeyy/disaster-shield-ai` (public). On GitHub, `main` is at `7ec6fcc`, which includes `CLAUDE.md` and `PLAN.md`. A newer local commit with the health-check doc updates is **not pushed yet**. |
 | Supabase mode | Implemented, **untested against a live project** (no credentials yet) |
 | Project name | **Disaster-Shield AI**. The owner chose to keep it (2026-11-19). |
 
@@ -128,14 +128,15 @@
 - [x] `render.yaml` blueprint and live Render deploy; all five modules tested on the live site
 - [x] Name-conflict check (web, domains, GitHub, Render) with five alternatives. The owner kept the name.
 - [x] `CLAUDE.md` and `PLAN.md` created (2026-11-20)
-- [x] Commit `CLAUDE.md` + `PLAN.md` locally on `main` (2026-11-20, owner approved; the message includes `[skip render]`)
-- [ ] Push the docs commit to GitHub. Needs the owner's approval; `[skip render]` means Render will not redeploy.
+- [x] Commit `CLAUDE.md` + `PLAN.md` on `main` as `7ec6fcc` (2026-11-20, owner approved; the message includes `[skip render]`)
+- [x] Push `7ec6fcc` to GitHub (2026-11-20). Render did not redeploy, as intended.
+- [x] Set the health check path `/api/health` on the live Render service (2026-11-20, owner approved). Verified through the Render API and a live health request.
 
 ---
 
 ## 3. Pending tasks (summary)
 
-1. Push the local docs commit to GitHub (needs the owner's approval).
+1. Push the local doc-update commit from 2026-11-20 (needs the owner's approval; its message includes `[skip render]`).
 2. Run a browser QA pass on the untested flows and record the results in §6:
    - flood-report submit and verify
    - alert withdraw and re-activate
@@ -188,12 +189,15 @@
 | 2026-11-19 | `seed.sql` would fail: `delete from rescue_teams` violates the `rescue_has_team` check | `profiles.team_id` is `on delete set null`, and rescue profiles must have a team | Zones and teams are **upserted**; other tables are truncated |
 | 2026-11-19 | `gh` template syntax error in PowerShell | PowerShell parsing of the Go template | Used `--json` and parsed the output instead |
 | 2026-11-19 | `preview_start` could not find `launch.json` | Session working directory was still the scratch folder | Started the dev server in a background shell and opened the preview by URL |
+| 2026-11-20 | Live Render service had no health check path, so Render could not detect unhealthy deploys | The service was created through the Render API, not the `render.yaml` Blueprint, so the Blueprint's `healthCheckPath` never applied | Set `/api/health` in the Render dashboard (owner approved). Saving it triggered a 20-second `service_updated` redeploy of `f635c2e`; the service went live and healthy. |
+| 2026-11-20 | `git commit -F -` with a PowerShell here-string committed nothing ("pathspec … did not match") | PowerShell passed the here-string as an argument, not on stdin | Wrote the message to a file and used `git commit -F <file>` |
 
 ### Open or known issues
 
 | Issue | Impact | Notes |
 | --- | --- | --- |
 | Render free plan sleeps after about 15 minutes idle | First visit can take about 1 minute | Open the site a few minutes before a demo, or upgrade the plan |
+| Live Render service is not managed by `render.yaml` | Editing `render.yaml` has no effect on the live service | The service was created through the Render API. Change live settings in the dashboard (with owner approval). The health check path was fixed this way on 2026-11-20. |
 | Render URL has the `-r7x6` suffix | Cosmetic | Render assigned it even though the plain subdomain appeared unused; a custom domain would hide it |
 | Supabase mode untested | Unknown bugs may exist in auth, RLS, RPC or realtime paths | See pending task 3 |
 | Demo-mode permissions run in the browser | Not real security in demo mode | By design for the prototype; Supabase mode is the real enforcement |
@@ -208,11 +212,14 @@
 - [x] **GitHub:** <https://github.com/vjxeyy/disaster-shield-ai>, public, `main`. Commits:
   - `129bb76` initial commit (93 files)
   - `f635c2e` Render blueprint and README section
-  - docs commit adding `CLAUDE.md` + `PLAN.md` (2026-11-20, local only, not pushed yet)
+  - `7ec6fcc` `CLAUDE.md` + `PLAN.md` (2026-11-20, pushed, `[skip render]`)
+  - doc updates recording the health-check change (2026-11-20, committed locally, not pushed yet, `[skip render]`)
 - [x] **Render:**
-  - Service `srv-dbvg7c6k1f9s73cfr8eg` in workspace `tea-dbarasrbc2fs73cgand0`
-  - Free plan, Singapore, Node 22, auto-deploy from `main`, health check `/api/health`
-  - Live deploy `dep-dbvg7cmk1f9s73cfr9k0`; no errors in the Render logs
+  - Service `srv-dbvg7c6k1f9s73cfr8eg` in workspace `tea-dbarasrbc2fs73cgand0`. It was created through the API, not from the `render.yaml` Blueprint.
+  - Free plan, Singapore, Node 22, auto-deploy on every commit to `main`
+  - Health check path `/api/health`, set in the dashboard on 2026-11-20
+  - Live deploy `dep-dbvpjpui0phs73aof4i0` (commit `f635c2e`, trigger `service_updated` from the health-check change, live 2026-11-20). The previous deploy was `dep-dbvg7cmk1f9s73cfr9k0`, the same commit.
+  - `7ec6fcc` created no deploy, as intended (`[skip render]`)
 - [x] **Live URL:** <https://disaster-shield-ai-r7x6.onrender.com>
 - [ ] **Vercel:** not deployed. The owner said "Not now"; the instructions are in README §8.
 - [ ] **Supabase:** no project connected; the app runs in demo mode
@@ -226,6 +233,10 @@
 | --- | --- | --- | --- |
 | 2026-11-20 | Local | `npm run typecheck`, `npm run lint`, `npm run verify` | ✅ all pass, 19/19 logic checks |
 | 2026-11-20 | Live | `GET /api/health` | ✅ `ok`, demo mode, `rule-based@1.0.0-prototype` |
+| 2026-11-20 | GitHub | Push of `7ec6fcc` | ✅ `origin/main` = `7ec6fcc` |
+| 2026-11-20 | Render | `[skip render]` on a push to `main`, with auto-deploy on | ✅ no deploy was created |
+| 2026-11-20 | Render | Health check path set to `/api/health` | ✅ the API reports `healthCheckPath: /api/health`; redeploy `dep-dbvpjpui0phs73aof4i0` is live |
+| 2026-11-20 | Live | `GET /api/health` and `GET /` after the redeploy | ✅ both HTTP 200; health returns `ok`, demo mode |
 | 2026-11-19 | Local | `npm run build` (production) | ✅ |
 | 2026-11-19 | Local browser | Full 7-step Velachery guided demo | ✅ 7/7 |
 | 2026-11-19 | Local browser | All pages at 375 px width | ✅ no horizontal scroll |
@@ -279,7 +290,7 @@
 
 ## 7. Next steps
 
-1. **Owner:** approve pushing the local docs commit. Its message includes `[skip render]`, so Render does not redeploy.
+1. **Owner:** approve pushing the local doc-update commit (`[skip render]`, so no redeploy).
 2. Browser QA pass on the untested flows (pending task 2). Fix anything found, then update §2, §4 and §6.
 3. Get the owner's decision on the README (live URL; team and hackathon name).
 4. When the owner provides a Supabase project:
@@ -295,4 +306,4 @@
 | Date | Session | Completed | Remaining at end |
 | --- | --- | --- | --- |
 | 2026-11-19 | 1 | Built the full prototype (5 modules, 4 roles, demo + Supabase backends, risk engine, SQL, README); local QA; Documents copy; UI branding removal; GitHub push; Render deploy and live QA; name check (kept the name) | Supabase live test; optional README/domain decisions |
-| 2026-11-20 | 2 | Inspected the project; re-ran typecheck, lint and verify (all pass) and the live health check (ok); created `CLAUDE.md` and `PLAN.md`; committed them locally on `main` | Push the docs commit (approval needed); QA pass on untested flows; Supabase test |
+| 2026-11-20 | 2 | Inspected the project; re-ran typecheck, lint and verify (all pass) and the live health check (ok); created `CLAUDE.md` and `PLAN.md`; committed and pushed them (`7ec6fcc`, no redeploy); found that the live Render service had no health check path and set it to `/api/health` (owner approved; verified); committed the doc updates locally | Push the doc-update commit (approval needed); QA pass on untested flows; Supabase test |
